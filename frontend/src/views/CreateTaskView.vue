@@ -163,6 +163,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { createTask, deleteImage, getFieldOptions, getTaskDetail, listTaskImages, recognizeTask, uploadFiles } from '../api'
+import { fileUrl } from '../utils/fileUrl'
 
 const form = ref({ city: '', site: '', device_type: '', person: '', inventory_date: '' })
 const loadingTask = ref(false)
@@ -243,12 +244,6 @@ async function submitTask() {
 
 function onFilesChange(evt) {
   selectedFiles.value = Array.from(evt.target.files || [])
-}
-
-function fileUrl(filePath) {
-  const normalized = String(filePath || '').replace(/\\/g, '/')
-  if (normalized.startsWith('http')) return normalized
-  return `http://127.0.0.1:8000/${normalized}`
 }
 
 async function refreshImages() {
