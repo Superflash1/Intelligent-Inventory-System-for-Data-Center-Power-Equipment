@@ -21,9 +21,10 @@ COPY frontend /app/frontend
 COPY docker/single-nginx.conf /etc/nginx/conf.d/default.conf
 COPY docker/start.sh /app/start.sh
 
-RUN rm -f /etc/nginx/sites-enabled/default \
-    && mkdir -p /app/uploads /app/data/db \
-    && chmod +x /app/start.sh
+RUN cd /app/frontend && npm run build \
+    && rm -f /etc/nginx/sites-enabled/default /etc/nginx/conf.d/default.conf.bak \
+    && chmod +x /app/start.sh \
+    && mkdir -p /app/uploads /app/data/db
 
 EXPOSE 80
 
